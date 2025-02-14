@@ -3,25 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar Código PIX</title>
+    <title>Salvar Código PIX</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
         body {
+            font-family: Arial, sans-serif;
             background-color: #f8f8f8;
-            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
+            margin: 0;
         }
-
         .container {
             background-color: #fff;
             padding: 20px;
@@ -31,47 +23,39 @@
             max-width: 400px;
             width: 100%;
         }
-
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
         }
-
-        .pix-placeholder {
-            margin-top: 20px;
-            padding: 20px;
+        .pix-code {
+            margin: 20px 0;
+            padding: 10px;
             background-color: #f1f1f1;
-            border-radius: 10px;
+            border-radius: 5px;
             font-size: 16px;
-            color: #555;
+            word-break: break-all;
         }
-
-        .copy-button {
-            margin-top: 10px;
+        .save-button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
-
-        .copy-button:hover {
+        .save-button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Atualizar Código PIX</h1>
-
-        <!-- Espaço reservado para o código PIX -->
-        <div class="pix-placeholder" id="pix-placeholder">
-            Aguarde, carregando código PIX...
+        <h1>Código PIX</h1>
+        <div class="pix-code" id="pix-code">
+            <!-- O código PIX será exibido aqui -->
         </div>
-
-        <!-- Botão para copiar o código PIX -->
-        <button class="copy-button" id="copy-button" style="display: none;">Copiar Código PIX</button>
+        <button class="save-button" id="save-button" style="display: none;">Salvar Código PIX</button>
     </div>
 
     <script>
@@ -81,38 +65,49 @@
             return urlParams.get(name);
         }
 
-        // Função para atualizar o código PIX na página
-        function atualizarCodigoPIX() {
-            // Recupera o código PIX da URL
+        // Função para salvar o código PIX no servidor
+        async function salvarCodigoPIX(codigoPIX) {
+            try {
+                const response = await fetch('/pix.txt', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: codigoPIX
+                });
+
+                if (response.ok) {
+                    alert('Código PIX salvo com sucesso no servidor.');
+                } else {
+                    alert('Erro ao salvar o código PIX no servidor.');
+                }
+            } catch (error) {
+                alert('Erro ao conectar-se com o servidor.');
+            }
+        }
+
+        // Ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
             const codigoPIX = getParameterByName('pix');
 
             if (codigoPIX) {
                 // Exibe o código PIX na página
-                document.getElementById('pix-placeholder').innerHTML = `
-                    <p>Código PIX: ${codigoPIX}</p>
-                `;
+                const pixCodeElement = document.getElementById('pix-code');
+                pixCodeElement.textContent = codigoPIX;
 
-                // Mostra o botão de copiar
-                document.getElementById('copy-button').style.display = 'block';
+                // Mostra o botão de salvar
+                const saveButton = document.getElementById('save-button');
+                saveButton.style.display = 'inline-block';
 
-                // Configura o botão de copiar
-                document.getElementById('copy-button').addEventListener('click', () => {
-                    navigator.clipboard.writeText(codigoPIX)
-                        .then(() => {
-                            alert('Código PIX copiado com sucesso!');
-                        })
-                        .catch(() => {
-                            alert('Erro ao copiar o código PIX.');
-                        });
+                // Adiciona evento ao botão para salvar o arquivo
+                saveButton.addEventListener('click', () => {
+                    salvarCodigoPIX(codigoPIX);
                 });
             } else {
                 // Se não houver código PIX na URL, exibe uma mensagem
-                document.getElementById('pix-placeholder').textContent = 'Nenhum código PIX fornecido.';
+                document.getElementById('pix-code').textContent = 'Nenhum código PIX fornecido.';
             }
-        }
-
-        // Atualiza o código PIX ao carregar a página
-        atualizarCodigoPIX();
+        });
     </script>
 </body>
 </html>
