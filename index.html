@@ -1,12 +1,138 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerar Pix</title>
+    <title>Pagar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .pix-placeholder {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo ao Gerar Pix!</h1>
-    <p>Seu site está online no GitHub Pages. 🚀</p>
+    <div class="container">
+        <!-- Nome do usuário -->
+        <h1 id="user-name"></h1>
+
+        <!-- Informações do pagamento -->
+        <div class="info">
+            <p>Valor disponível para retirada: <span id="valor-disponivel"></span></p>
+            <p>CPF do titular: <span id="cpf-titular"></span></p>
+        </div>
+
+        <!-- Espaço reservado para o código PIX -->
+        <div class="pix-placeholder" id="pix-placeholder">
+            Aguarde, carregando código PIX...
+        </div>
+    </div>
+
+    <script>
+        // Função para extrair parâmetros da URL
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Função para formatar o CPF (borrando os 6 dígitos do meio)
+        function formatarCPF(cpf) {
+            if (!cpf || cpf.length !== 11) return cpf; // Retorna o CPF original se não for válido
+            return `${cpf.slice(0, 3)}.***.***-${cpf.slice(-2)}`;
+        }
+
+        // Recuperando os dados da URL
+        const nome = getParameterByName('nome');
+        const cpf = getParameterByName('cpf');
+        const saldo = getParameterByName('saldo');
+
+        // Exibindo os dados na página
+        if (nome && cpf && saldo) {
+            document.getElementById('user-name').textContent = `Olá, ${nome}`;
+            document.getElementById('valor-disponivel').textContent = `R$${parseFloat(saldo).toFixed(2).replace('.', ',')}`;
+            document.getElementById('cpf-titular').textContent = formatarCPF(cpf);
+        } else {
+            alert("Dados inválidos. Por favor, retorne à página anterior.");
+            window.history.back(); // Volta para a página anterior
+        }
+
+        // Espaço reservado para a requisição AJAX (código PIX)
+        function carregarCodigoPIX() {
+            // Aqui você pode implementar a requisição AJAX para buscar o código PIX
+            // Exemplo:
+            /*
+            fetch('https://sua-api.com/gerar-pix', {
+                method: 'POST',
+                body: JSON.stringify({ cpf, valor: saldo }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('pix-placeholder').innerHTML = `
+                    <img src="${data.qrcode}" alt="Código PIX">
+                    <p>${data.codigoPix}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar código PIX:', error);
+                document.getElementById('pix-placeholder').textContent = 'Erro ao carregar código PIX.';
+            });
+            */
+        }
+
+        // Simulando o carregamento do código PIX (substitua pela requisição AJAX real)
+        setTimeout(() => {
+            document.getElementById('pix-placeholder').innerHTML = `
+                <p>Código PIX: 123e4567-e89b-12d3-a456-426614174000</p>
+                <p>Ou escaneie o QR Code abaixo:</p>
+                <img src="https://via.placeholder.com/200" alt="QR Code PIX">
+            `;
+        }, 2000); // Simula um delay de 2 segundos
+    </script>
 </body>
 </html>
