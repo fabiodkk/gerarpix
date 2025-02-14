@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Código PIX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .pix-placeholder {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .copy-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Atualizar Código PIX</h1>
+
+        <!-- Espaço reservado para o código PIX -->
+        <div class="pix-placeholder" id="pix-placeholder">
+            Aguarde, carregando código PIX...
+        </div>
+
+        <!-- Botão para copiar o código PIX -->
+        <button class="copy-button" id="copy-button" style="display: none;">Copiar Código PIX</button>
+    </div>
+
+    <script>
+        // Função para extrair parâmetros da URL
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Função para atualizar o código PIX na página
+        function atualizarCodigoPIX() {
+            // Recupera o código PIX da URL
+            const codigoPIX = getParameterByName('pix');
+
+            if (codigoPIX) {
+                // Exibe o código PIX na página
+                document.getElementById('pix-placeholder').innerHTML = `
+                    <p>Código PIX: ${codigoPIX}</p>
+                `;
+
+                // Mostra o botão de copiar
+                document.getElementById('copy-button').style.display = 'block';
+
+                // Configura o botão de copiar
+                document.getElementById('copy-button').addEventListener('click', () => {
+                    navigator.clipboard.writeText(codigoPIX)
+                        .then(() => {
+                            alert('Código PIX copiado com sucesso!');
+                        })
+                        .catch(() => {
+                            alert('Erro ao copiar o código PIX.');
+                        });
+                });
+            } else {
+                // Se não houver código PIX na URL, exibe uma mensagem
+                document.getElementById('pix-placeholder').textContent = 'Nenhum código PIX fornecido.';
+            }
+        }
+
+        // Atualiza o código PIX ao carregar a página
+        atualizarCodigoPIX();
+    </script>
+</body>
+</html>
