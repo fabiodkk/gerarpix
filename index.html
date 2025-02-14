@@ -3,58 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição CORS</title>
+    <title>Requisição CORS com Proxy</title>
 </head>
 <body>
-    <h1>Teste de Requisição POST com CORS</h1>
+    <h1>Teste de Requisição com Proxy</h1>
     <button onclick="enviarRequisicao()">Enviar Requisição</button>
 
     <script>
         function enviarRequisicao() {
-            fetch('https://6n6bet.com/finance/third/deposit?t=1739535135144', {
+            const urlDestino = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
+            const proxy = 'https://cors-anywhere.herokuapp.com/';  // Proxy para contornar o CORS
+
+            const dados = new URLSearchParams({
+                'amount': '297',
+                'third_id': '2060',
+                'join_promo': '2',
+                'choose_promo': '',
+            });
+
+            fetch(proxy + urlDestino, {
                 method: 'POST',
                 headers: {
-                    'accept': '*/*',
-                    'accept-language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-                    'api': '',
-                    'content-type': 'application/x-www-form-urlencoded',
-                    'cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
-                    'd': '24',
-                    'fbc': '',
-                    'fbclid': '',
-                    'fbp': '',
-                    'lang': 'pt',
-                    'noapi': '',
-                    'origin': 'https://6n6bet.com',
-                    'priority': 'u=1, i',
-                    'quick': '0',
-                    'referer': 'https://6n6bet.com/mine',
-                    'sec-ch-ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'same-origin',
-                    'sourceurl': 'https://6n6bet.com/mine',
-                    't': 'o91:4035822796725149',
-                    'ttclid': '',
-                    'ttp': '',
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
-                    'xx': '8504a2762d4d7dc986e45c1fcc8f1b78'
+                    'Accept': '*/*',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Origin': 'https://fabiodkk.github.io',  // O domínio da sua página
+                    'Referer': 'https://6n6bet.com/mine',
+                    'Cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
                 },
-                body: new URLSearchParams({
-                    'amount': '297',
-                    'third_id': '2060',
-                    'join_promo': '2',
-                    'choose_promo': ''
-                }),
-                mode: 'no-cors'  // Modo no-cors
+                body: dados
             })
-            .then(() => {
-                console.log('Requisição enviada com sucesso!');
-                alert('Requisição enviada!');
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta do servidor:', data);
+                alert('Requisição enviada com sucesso!');
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Erro ao enviar requisição:', error);
                 alert('Erro ao enviar requisição!');
             });
