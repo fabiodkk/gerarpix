@@ -68,7 +68,7 @@
         // Função para salvar o código PIX no servidor
         async function salvarCodigoPIX(codigoPIX) {
             try {
-                const response = await fetch('/pix.txt', {
+                const response = await fetch('gerarpix//pix.txt', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'text/plain'
