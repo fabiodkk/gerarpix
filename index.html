@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição CORS com Proxy</title>
+    <title>Requisição com Intervalo</title>
 </head>
 <body>
-    <h1>Teste de Requisição com Proxy</h1>
+    <h1>Teste de Requisição com Intervalo</h1>
     <button onclick="enviarRequisicao()">Enviar Requisição</button>
 
     <script>
@@ -56,6 +56,11 @@
                 console.error('Erro ao enviar requisição:', error);
                 alert('Erro ao enviar requisição!');
             });
+
+            // Adiciona um intervalo de 5 segundos antes de permitir outra requisição
+            setTimeout(() => {
+                console.log('Aguardando 5 segundos antes de permitir outra requisição...');
+            }, 5000);
         }
     </script>
 </body>
