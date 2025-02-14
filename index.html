@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição AJAX</title>
+    <title>Requisição Fetch</title>
 </head>
 <body>
-    <h1>Teste da Requisição AJAX</h1>
+    <h1>Teste de Requisição Fetch</h1>
     <button onclick="enviarRequisicao()">Enviar Requisição</button>
 
     <script>
@@ -14,44 +14,41 @@
             const url = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
             const dados = 'amount=297&third_id=2060&join_promo=2&choose_promo=';
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-
-            // Configura os cabeçalhos da requisição
-            xhr.setRequestHeader('accept', '*/*');
-            xhr.setRequestHeader('accept-language', 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6');
-            xhr.setRequestHeader('cookie', '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000');
-            xhr.setRequestHeader('d', '24');
-            xhr.setRequestHeader('lang', 'pt');
-            xhr.setRequestHeader('origin', 'https://6n6bet.com');
-            xhr.setRequestHeader('priority', 'u=1, i');
-            xhr.setRequestHeader('quick', '0');
-            xhr.setRequestHeader('referer', 'https://6n6bet.com/mine');
-            xhr.setRequestHeader('sec-ch-ua', '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"');
-            xhr.setRequestHeader('sec-ch-ua-mobile', '?0');
-            xhr.setRequestHeader('sec-ch-ua-platform', '"Windows"');
-            xhr.setRequestHeader('sec-fetch-dest', 'empty');
-            xhr.setRequestHeader('sec-fetch-mode', 'cors');
-            xhr.setRequestHeader('sec-fetch-site', 'same-origin');
-            xhr.setRequestHeader('sourceurl', 'https://6n6bet.com/mine');
-            xhr.setRequestHeader('t', 'o91:4035822796725149');
-            xhr.setRequestHeader('user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0');
-            xhr.setRequestHeader('xx', '8504a2762d4d7dc986e45c1fcc8f1b78');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) { // Requisição concluída
-                    if (xhr.status === 200) { // Sucesso
-                        console.log('Resposta do servidor:', xhr.responseText);
-                        alert('Requisição enviada com sucesso!');
-                    } else { // Erro
-                        console.error('Erro ao enviar requisição:', xhr.status, xhr.statusText);
-                        alert('Erro ao enviar requisição!');
-                    }
-                }
-            };
-
-            xhr.send(dados); // Envia os dados
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'accept': '*/*',
+                    'accept-language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+                    'cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
+                    'd': '24',
+                    'lang': 'pt',
+                    'origin': 'https://6n6bet.com',
+                    'priority': 'u=1, i',
+                    'quick': '0',
+                    'referer': 'https://6n6bet.com/mine',
+                    'sec-ch-ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Windows"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-origin',
+                    'sourceurl': 'https://6n6bet.com/mine',
+                    't': 'o91:4035822796725149',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
+                    'xx': '8504a2762d4d7dc986e45c1fcc8f1b78',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: dados
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Resposta do servidor:', data);
+                alert('Requisição enviada com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao enviar requisição:', error);
+                alert('Erro ao enviar requisição!');
+            });
         }
     </script>
 </body>
