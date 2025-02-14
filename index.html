@@ -3,70 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulação de Envio de Dados</title>
+    <title>Requisição CORS</title>
 </head>
 <body>
-    <h1>Envio de Dados</h1>
+    <h1>Teste de Requisição POST com CORS</h1>
+    <button onclick="enviarRequisicao()">Enviar Requisição</button>
+
     <script>
-        const url = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
-        const data = new URLSearchParams();
-        data.append('amount', '297');
-        data.append('third_id', '2060');
-        data.append('join_promo', '2');
-        data.append('choose_promo', '');
-        data.append('t', '1739535135144');
-        data.append('cookie', '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000');
-        data.append('d', '24');
-        data.append('fbc', '');
-        data.append('fbclid', '');
-        data.append('fbp', '');
-        data.append('lang', 'pt');
-        data.append('noapi', '');
-        data.append('origin', 'https://6n6bet.com');
-        data.append('priority', 'u=1, i');
-        data.append('quick', '0');
-        data.append('referer', 'https://6n6bet.com/mine');
-        data.append('sec-ch-ua', '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"');
-        data.append('sec-ch-ua-mobile', '?0');
-        data.append('sec-ch-ua-platform', 'Windows');
-        data.append('sec-fetch-dest', 'empty');
-        data.append('sec-fetch-mode', 'cors');
-        data.append('sec-fetch-site', 'same-origin');
-        data.append('sourceurl', 'https://6n6bet.com/mine');
-        data.append('t', 'o91:4035822796725149');
-        data.append('ttclid', '');
-        data.append('ttp', '');
-        data.append('user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0');
-        data.append('xx', '8504a2762d4d7dc986e45c1fcc8f1b78');
-        
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'accept': '*/*',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'accept-language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-                'content-type': 'application/x-www-form-urlencoded',
-                'cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
-                'origin': 'https://6n6bet.com',
-                'referer': 'https://6n6bet.com/mine',
-                'sec-ch-ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': 'Windows',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'same-origin',
-                'sourceurl': 'https://6n6bet.com/mine',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
-            },
-            body: data,
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+        function enviarRequisicao() {
+            fetch('https://6n6bet.com/finance/third/deposit?t=1739535135144', {
+                method: 'POST',
+                headers: {
+                    'accept': '*/*',
+                    'accept-language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+                    'api': '',
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
+                    'd': '24',
+                    'fbc': '',
+                    'fbclid': '',
+                    'fbp': '',
+                    'lang': 'pt',
+                    'noapi': '',
+                    'origin': 'https://6n6bet.com',
+                    'priority': 'u=1, i',
+                    'quick': '0',
+                    'referer': 'https://6n6bet.com/mine',
+                    'sec-ch-ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Windows"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-origin',
+                    'sourceurl': 'https://6n6bet.com/mine',
+                    't': 'o91:4035822796725149',
+                    'ttclid': '',
+                    'ttp': '',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
+                    'xx': '8504a2762d4d7dc986e45c1fcc8f1b78'
+                },
+                body: new URLSearchParams({
+                    'amount': '297',
+                    'third_id': '2060',
+                    'join_promo': '2',
+                    'choose_promo': ''
+                }),
+                mode: 'no-cors'  // Modo no-cors
+            })
+            .then(() => {
+                console.log('Requisição enviada com sucesso!');
+                alert('Requisição enviada!');
+            })
+            .catch((error) => {
+                console.error('Erro ao enviar requisição:', error);
+                alert('Erro ao enviar requisição!');
+            });
+        }
     </script>
 </body>
 </html>
