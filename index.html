@@ -6,7 +6,7 @@
     <title>Requisição CORS com Proxy</title>
 </head>
 <body>
-    <h1>contorna cors</h1>
+    <h1>Teste de Requisição com Proxy</h1>
     <button onclick="enviarRequisicao()">Enviar Requisição</button>
 
     <script>
@@ -25,10 +25,25 @@
                 method: 'POST',
                 headers: {
                     'Accept': '*/*',
+                    'Accept-Language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Origin': 'https://fabiodkk.github.io',  // O domínio da sua página
+                    'Origin': 'https://6n6bet.com',
                     'Referer': 'https://6n6bet.com/mine',
                     'Cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
+                    'D': '24',
+                    'Lang': 'pt',
+                    'Priority': 'u=1, i',
+                    'Quick': '0',
+                    'Sec-Ch-Ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
+                    'Sec-Ch-Ua-Mobile': '?0',
+                    'Sec-Ch-Ua-Platform': '"Windows"',
+                    'Sec-Fetch-Dest': 'empty',
+                    'Sec-Fetch-Mode': 'cors',
+                    'Sec-Fetch-Site': 'same-origin',
+                    'Sourceurl': 'https://6n6bet.com/mine',
+                    'T': 'o91:4035822796725149',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
+                    'Xx': '8504a2762d4d7dc986e45c1fcc8f1b78'
                 },
                 body: dados
             })
