@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salvar Código PIX</title>
+    <title>Exibir Código PIX</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,18 +35,6 @@
             font-size: 16px;
             word-break: break-all;
         }
-        .save-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .save-button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -55,59 +43,23 @@
         <div class="pix-code" id="pix-code">
             <!-- O código PIX será exibido aqui -->
         </div>
-        <button class="save-button" id="save-button" style="display: none;">Salvar Código PIX</button>
     </div>
 
     <script>
-        // Função para extrair parâmetros da URL
+        // Código PIX predefinido
+        const codigoPIXPredefinido = '00020126360014BR.GOV.BCB.PIX0114+55119999999990203***520400005303986540510.005802BR5925Nome do Beneficiário6009SAO PAULO61080540900062070503***6304B14F';
+
+        // Função para obter o valor de um parâmetro da URL
         function getParameterByName(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
-        // Função para salvar o código PIX no servidor
-        async function salvarCodigoPIX(codigoPIX) {
-            try {
-                const response = await fetch('pix.txt', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: codigoPIX
-                });
+        // Obtém o parâmetro 'pix' da URL
+        const codigoPIX = getParameterByName('pix') || codigoPIXPredefinido;
 
-                if (response.ok) {
-                    alert('Código PIX salvo com sucesso no servidor.');
-                } else {
-                    alert('Erro ao salvar o código PIX no servidor.');
-                }
-            } catch (error) {
-                alert('Erro ao conectar-se com o servidor.');
-            }
-        }
-
-        // Ao carregar a página
-        document.addEventListener('DOMContentLoaded', () => {
-            const codigoPIX = getParameterByName('pix');
-
-            if (codigoPIX) {
-                // Exibe o código PIX na página
-                const pixCodeElement = document.getElementById('pix-code');
-                pixCodeElement.textContent = codigoPIX;
-
-                // Mostra o botão de salvar
-                const saveButton = document.getElementById('save-button');
-                saveButton.style.display = 'inline-block';
-
-                // Adiciona evento ao botão para salvar o arquivo
-                saveButton.addEventListener('click', () => {
-                    salvarCodigoPIX(codigoPIX);
-                });
-            } else {
-                // Se não houver código PIX na URL, exibe uma mensagem
-                document.getElementById('pix-code').textContent = 'Nenhum código PIX fornecido.';
-            }
-        });
+        // Exibe o código PIX na página
+        document.getElementById('pix-code').textContent = codigoPIX;
     </script>
 </body>
 </html>
