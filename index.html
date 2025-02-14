@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -55,6 +54,20 @@
             font-size: 16px;
             color: #555;
         }
+
+        .copy-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -72,6 +85,9 @@
         <div class="pix-placeholder" id="pix-placeholder">
             Aguarde, carregando código PIX...
         </div>
+
+        <!-- Botão para copiar o código PIX -->
+        <button class="copy-button" id="copy-button" style="display: none;">Copiar Código PIX</button>
     </div>
 
     <script>
@@ -102,38 +118,47 @@
             window.location.href = "https://sites.google.com/view/rendaganha/home"; // Redireciona para o site
         }
 
-        // Espaço reservado para a requisição AJAX (código PIX)
-        function carregarCodigoPIX() {
-            // Aqui você pode implementar a requisição AJAX para buscar o código PIX
-            // Exemplo:
-            /*
-            fetch('https://sua-api.com/gerar-pix', {
-                method: 'POST',
-                body: JSON.stringify({ cpf, valor: saldo }),
-                headers: { 'Content-Type': 'application/json' }
-            })
-            .then(response => response.json())
-            .then(data => {
+        // Função para carregar o código PIX do arquivo pix.txt
+        async function carregarCodigoPIX() {
+            try {
+                // URL do arquivo pix.txt (substitua pelo link do seu Gist ou arquivo hospedado)
+                const urlPixTxt = 'https://gist.githubusercontent.com/seu-usuario/seu-gist-id/raw/pix.txt';
+
+                // Faz a requisição para carregar o conteúdo do arquivo
+                const response = await fetch(urlPixTxt);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar o código PIX');
+                }
+
+                // Lê o conteúdo do arquivo
+                const codigoPIX = await response.text();
+
+                // Exibe o código PIX na página
                 document.getElementById('pix-placeholder').innerHTML = `
-                    <img src="${data.qrcode}" alt="Código PIX">
-                    <p>${data.codigoPix}</p>
+                    <p>Código PIX: ${codigoPIX}</p>
                 `;
-            })
-            .catch(error => {
+
+                // Mostra o botão de copiar
+                document.getElementById('copy-button').style.display = 'block';
+
+                // Configura o botão de copiar
+                document.getElementById('copy-button').addEventListener('click', () => {
+                    navigator.clipboard.writeText(codigoPIX)
+                        .then(() => {
+                            alert('Código PIX copiado com sucesso!');
+                        })
+                        .catch(() => {
+                            alert('Erro ao copiar o código PIX.');
+                        });
+                });
+            } catch (error) {
                 console.error('Erro ao carregar código PIX:', error);
                 document.getElementById('pix-placeholder').textContent = 'Erro ao carregar código PIX.';
-            });
-            */
+            }
         }
 
-        // Simulando o carregamento do código PIX (substitua pela requisição AJAX real)
-        setTimeout(() => {
-            document.getElementById('pix-placeholder').innerHTML = `
-                <p>Código PIX: 00020126820014br.gov.bcb.pix2560pix.treeal.com/qr/v3/at/6c51a9ad-f15d-4bea-9172-47fb043a0c4e5204000053039865802BR5925LISBOAPAY_FACILITADORA_DE6009SAO_PAULO62070503***6304EA53</p>
-                <p>Ou escaneie o QR Code abaixo:</p>
-                <img src="https://via.placeholder.com/200" alt="QR Code PIX">
-            `;
-        }, 2000); // Simula um delay de 2 segundos
+        // Carrega o código PIX ao carregar a página
+        carregarCodigoPIX();
     </script>
 </body>
 </html>
