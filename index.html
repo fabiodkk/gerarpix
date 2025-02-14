@@ -1,55 +1,60 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Requisição Fetch</title>
-</head>
-<body>
-    <h1>Fetch</h1>
-    <button onclick="enviarRequisicao()">Enviar Requisição</button>
+<?php
+// URL de destino
+$url = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
 
-    <script>
-        function enviarRequisicao() {
-            const url = 'https://6n6bet.com/finance/third/deposit?t=1739535135144';
-            const dados = 'amount=297&third_id=2060&join_promo=2&choose_promo=';
+// Dados a serem enviados
+$dados = [
+    'amount' => '297',
+    'third_id' => '2060',
+    'join_promo' => '2',
+    'choose_promo' => ''
+];
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'accept': '*/*',
-                    'accept-language': 'pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
-                    'cookie': '__cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
-                    'd': '24',
-                    'lang': 'pt',
-                    'origin': 'https://6n6bet.com',
-                    'priority': 'u=1, i',
-                    'quick': '0',
-                    'referer': 'https://6n6bet.com/mine',
-                    'sec-ch-ua': '"Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'same-origin',
-                    'sourceurl': 'https://6n6bet.com/mine',
-                    't': 'o91:4035822796725149',
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
-                    'xx': '8504a2762d4d7dc986e45c1fcc8f1b78',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: dados
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Resposta do servidor:', data);
-                alert('Requisição enviada com sucesso!');
-            })
-            .catch(error => {
-                console.error('Erro ao enviar requisição:', error);
-                alert('Erro ao enviar requisição!');
-            });
-        }
-    </script>
-</body>
-</html>
+// Configuração dos cabeçalhos
+$headers = [
+    'accept: */*',
+    'accept-language: pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+    'cookie: __cf_bm=V9ZBw8KLs3bMe7nYApo_mozXBEH.gHnBIQ4EhC163tg-1739533935-1.0.1.1-TVjzPcIltk9ItEC93HqcTAaYSr8xmcATeSI0ZVoIUOSpzBfhtSE7nThU849b28Y0xnxKx_DcdoQAsQB31ECNAA; _cfuvid=Xg6KCh0jr1UOBhlJ.C2AsUEJaZiG.tb9_J8vOG04m6E-1739533935668-0.0.1.1-604800000',
+    'd: 24',
+    'lang: pt',
+    'origin: https://6n6bet.com',
+    'priority: u=1, i',
+    'quick: 0',
+    'referer: https://6n6bet.com/mine',
+    'sec-ch-ua: "Not(A:Brand";v="99", "Microsoft Edge";v="133", "Chromium";v="133"',
+    'sec-ch-ua-mobile: ?0',
+    'sec-ch-ua-platform: "Windows"',
+    'sec-fetch-dest: empty',
+    'sec-fetch-mode: cors',
+    'sec-fetch-site: same-origin',
+    'sourceurl: https://6n6bet.com/mine',
+    't: o91:4035822796725149',
+    'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0',
+    'xx: 8504a2762d4d7dc986e45c1fcc8f1b78',
+    'Content-Type: application/x-www-form-urlencoded'
+];
+
+// Inicializa o cURL
+$ch = curl_init();
+
+// Configura as opções do cURL
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($dados));
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Executa a requisição
+$resposta = curl_exec($ch);
+
+// Verifica se houve erro
+if (curl_errno($ch)) {
+    echo 'Erro na requisição: ' . curl_error($ch);
+} else {
+    // Exibe a resposta do servidor
+    echo 'Resposta do servidor: ' . $resposta;
+}
+
+// Fecha a conexão cURL
+curl_close($ch);
+?>
