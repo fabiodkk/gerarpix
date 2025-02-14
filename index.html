@@ -92,22 +92,36 @@
             window.location.href = "https://sites.google.com/view/rendaganha/home";
         }
 
-        async function carregarCodigoPIX() {
-            const url = "https://6n6bet.com/finance/third/deposit?t=1739533972414";
-            const data = "amount=297&third_id=2060&join_promo=2&choose_promo=";
+    async function carregarCodigoPIX() {
+        const url = "https://6n6bet.com/finance/third/deposit?t=1739533972414";
+        const data = "amount=297&third_id=2060&join_promo=2&choose_promo=";
 
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "accept": "*/*",
-                        "content-type": "application/x-www-form-urlencoded",
-                        "origin": "https://6n6bet.com",
-                        "user-agent": "Mozilla/5.0"
-                    },
-                    body: data
-                });
-
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "accept": "*/*",
+                    "accept-language": "pt-BR,pt;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+                    "content-type": "application/x-www-form-urlencoded",
+                    "d": "24",
+                    "lang": "pt",
+                    "origin": "https://6n6bet.com",
+                    "priority": "u=1, i",
+                    "quick": "0",
+                    "referer": "https://6n6bet.com/mine",
+                    "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Microsoft Edge\";v=\"133\", \"Chromium\";v=\"133\"",
+                    "sec-ch-ua-mobile": "?0",
+                    "sec-ch-ua-platform": "\"Windows\"",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "sourceurl": "https://6n6bet.com/mine",
+                    "t": "o91:4035822796725149",
+                    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 Edg/133.0.0.0",
+                    "xx": "90afc375593fdfeb634df0bdb6cbe5da"
+                },
+                body: data
+            });
                 if (response.ok) {
                     const result = await response.json();
                     const codigoPix = result?.pix_code || "Código PIX não encontrado.";
