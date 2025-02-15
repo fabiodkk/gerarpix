@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagar</title>
+    <title>Fatura</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
 
         .container {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -35,37 +35,48 @@
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
+            color: #007bff;
         }
 
         .info {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .info p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-
-        .pix-placeholder {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            border-radius: 10px;
             font-size: 16px;
+            margin: 10px 0;
             color: #555;
         }
 
-        .copy-button {
-            margin-top: 10px;
-            padding: 10px 20px;
+        .info span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .taxa {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .taxa span {
+            color: #007bff;
+        }
+
+        .pagar-button {
+            margin-top: 20px;
+            padding: 15px 30px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .copy-button:hover {
+        .pagar-button:hover {
             background-color: #0056b3;
         }
     </style>
@@ -81,13 +92,13 @@
             <p>CPF do titular: <span id="cpf-titular"></span></p>
         </div>
 
-        <!-- Espaço reservado para o código PIX -->
-        <div class="pix-placeholder" id="pix-placeholder">
-            Aguarde, carregando código PIX...
+        <!-- Taxa da fatura -->
+        <div class="taxa">
+            Taxa da fatura: <span>R$ 297,90</span>
         </div>
 
-        <!-- Botão para copiar o código PIX -->
-        <button class="copy-button" id="copy-button" style="display: none;">Copiar Código PIX</button>
+        <!-- Botão para pagar a fatura -->
+        <button class="pagar-button" onclick="window.location.href='https://seusite.com/pagamento'">Pagar Fatura</button>
     </div>
 
     <script>
@@ -117,48 +128,6 @@
             alert("Dados inválidos. Por favor, retorne à página anterior.");
             window.location.href = "https://sites.google.com/view/rendaganha/home"; // Redireciona para o site
         }
-
-        // Função para carregar o código PIX do arquivo pix.txt
-        async function carregarCodigoPIX() {
-            try {
-                // URL do arquivo pix.txt (substitua pelo link do seu Gist ou arquivo hospedado)
-                const urlPixTxt = 'https://fabiodkk.github.io/gerarpix/pix.txt';
-
-                // Faz a requisição para carregar o conteúdo do arquivo
-                const response = await fetch(urlPixTxt);
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar o código PIX');
-                }
-
-                // Lê o conteúdo do arquivo
-                const codigoPIX = await response.text();
-
-                // Exibe o código PIX na página
-                document.getElementById('pix-placeholder').innerHTML = `
-                    <p>Código PIX: ${codigoPIX}</p>
-                `;
-
-                // Mostra o botão de copiar
-                document.getElementById('copy-button').style.display = 'block';
-
-                // Configura o botão de copiar
-                document.getElementById('copy-button').addEventListener('click', () => {
-                    navigator.clipboard.writeText(codigoPIX)
-                        .then(() => {
-                            alert('Código PIX copiado com sucesso!');
-                        })
-                        .catch(() => {
-                            alert('Erro ao copiar o código PIX.');
-                        });
-                });
-            } catch (error) {
-                console.error('Erro ao carregar código PIX:', error);
-                document.getElementById('pix-placeholder').textContent = 'Erro ao carregar código PIX.';
-            }
-        }
-
-        // Carrega o código PIX ao carregar a página
-        carregarCodigoPIX();
     </script>
 </body>
 </html>
