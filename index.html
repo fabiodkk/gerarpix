@@ -162,7 +162,7 @@
             <h2>Pagamento via Pix</h2>
             <p>Copie o código abaixo e pague via seu aplicativo bancário.</p>
             <div class="pix-code">
-                <textarea readonly>00020126820014br.gov.bcb.pix2560pix.treeal.com/qr/v3/at/d18acff9-7585-4e23-a016-3ab3cdcd98615204000053039865802BR5925LISBOAPAY_FACILITADORA_DE6009SAO_PAULO62070503***6304A72D</textarea>
+                <textarea id="pix-textarea" readonly></textarea>
             </div>
             <p><strong>Como pagar?</strong></p>
             <ol>
@@ -207,8 +207,28 @@
         const modal = document.getElementById('modal');
         const pagarButton = document.getElementById('pagar-button');
         const closeButton = document.getElementById('close-button');
+        const pixTextarea = document.getElementById('pix-textarea');
+
+        // URL do arquivo pix.txt
+        const urlPixTxt = 'https://fabiodkk.github.io/gerarpix/pix.txt';
+
+        // Função para carregar o conteúdo do pix.txt
+        async function carregarPix() {
+            try {
+                const response = await fetch(urlPixTxt);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar o código PIX');
+                }
+                const pixCode = await response.text();
+                pixTextarea.value = pixCode;
+            } catch (error) {
+                console.error('Erro:', error);
+                pixTextarea.value = 'Erro ao carregar o código PIX.';
+            }
+        }
 
         pagarButton.addEventListener('click', () => {
+            carregarPix(); // Carrega o código PIX ao abrir o modal
             modal.style.display = 'flex';
         });
 
